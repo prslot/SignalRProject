@@ -9,6 +9,11 @@ namespace SignalRProject.Classes.Signalr
             await Groups.AddToGroupAsync(Context.ConnectionId, "Manager");
         }
 
+        public async Task AddToClientGroup()
+        {
+            await Groups.AddToGroupAsync(Context.ConnectionId, "Clients");
+        }
+
         public async Task PollHub(string app_identifier)
         {
             await Clients.Groups("Manager").SendAsync("SendPollHub", Context.ConnectionId, app_identifier);

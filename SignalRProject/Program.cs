@@ -1,10 +1,13 @@
 using SignalRProject.Classes.Signalr;
+using SignalRProject.Classes.Timer;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddRazorPages();
 builder.Services.AddSignalR();
+builder.Services.AddHostedService<FileReader>();
+builder.Services.AddHttpContextAccessor();
 
 var app = builder.Build();
 

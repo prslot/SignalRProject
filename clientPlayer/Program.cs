@@ -1,13 +1,16 @@
-﻿using Microsoft.AspNetCore.SignalR.Client;
+﻿using Microsoft.AspNetCore.SignalR;
+using Microsoft.AspNetCore.SignalR.Client;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+using System.IO;
 using System.Threading.Tasks;
+using System.Windows;
+using System.Xml.Linq;
+using NetCoreAudio.Interfaces;
+using NetCoreAudio.Players;
 
 namespace clientPlayer
 {
-    internal class Program
+    public class Program
     {
         static async Task Main()
         {
@@ -19,7 +22,13 @@ namespace clientPlayer
                 .WithUrl("https://localhost:7112/hub")
                 .Build();
 
+            SignalRConn.On<byte[]>("Notify", message =>
+            {
+                File.WriteAllBytes(Path.Combine(Directory.GetCurrentDirectory(),  DateTime.Now.ToString("dd_MM_yyyy_HHmmssfff") + "_Audio.mp3"), message);
+            });
+
             await SignalRConn.StartAsync();
+            await SignalRConn.InvokeAsync("AddToClientGroup");
             await SignalRConn.InvokeAsync("RegisterHub", app_identifier);
 
             while (true)

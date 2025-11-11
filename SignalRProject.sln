@@ -1,11 +1,11 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
-VisualStudioVersion = 17.14.36518.9 d17.14
+VisualStudioVersion = 17.14.36518.9
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SignalRProject", "SignalRProject\SignalRProject.csproj", "{D06C3F38-7F93-4138-821E-5EBA866FD2F2}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "clientPlayer", "clientPlayer\clientPlayer.csproj", "{BE06F6E7-3890-49B4-B44A-9DB56AF3BCCC}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ClientPlayerNew", "ClientPlayerNew\ClientPlayerNew.csproj", "{BB252191-5305-4FF4-8A63-BE10CCFF53E9}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -17,10 +17,10 @@ Global
 		{D06C3F38-7F93-4138-821E-5EBA866FD2F2}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D06C3F38-7F93-4138-821E-5EBA866FD2F2}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D06C3F38-7F93-4138-821E-5EBA866FD2F2}.Release|Any CPU.Build.0 = Release|Any CPU
-		{BE06F6E7-3890-49B4-B44A-9DB56AF3BCCC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{BE06F6E7-3890-49B4-B44A-9DB56AF3BCCC}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{BE06F6E7-3890-49B4-B44A-9DB56AF3BCCC}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{BE06F6E7-3890-49B4-B44A-9DB56AF3BCCC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BB252191-5305-4FF4-8A63-BE10CCFF53E9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BB252191-5305-4FF4-8A63-BE10CCFF53E9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BB252191-5305-4FF4-8A63-BE10CCFF53E9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BB252191-5305-4FF4-8A63-BE10CCFF53E9}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

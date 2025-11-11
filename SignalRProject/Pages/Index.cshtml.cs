@@ -1,5 +1,6 @@
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using SignalRProject.Classes.Google;
 
 namespace SignalRProject.Pages
 {
@@ -14,7 +15,7 @@ namespace SignalRProject.Pages
 
         public void OnGet()
         {
-
+            TextToSpeach.CreаteTextToAudiоFile("Mooi man, dit gaat naar spraak.", "test.mp3");
         }
     }
 }
