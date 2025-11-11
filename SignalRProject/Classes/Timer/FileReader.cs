@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.SignalR;
 using SignalRProject.Classes.Events;
 using SignalRProject.Classes.models;
 using SignalRProject.Classes.Signalr;
+using System.Text.RegularExpressions;
 
 namespace SignalRProject.Classes.Timer
 {
@@ -14,6 +15,7 @@ namespace SignalRProject.Classes.Timer
         private readonly IHubContext<Hubs> _hubcontext;
         private System.Threading.Timer? _timer = null;
 
+        private readonly Regex GateReg = new Regex(@"([a-zA-Z]+)(\d+)");
         private const int hoursToGate = 1;
         private const int minutesToRepeat = 5;
 
@@ -59,6 +61,16 @@ namespace SignalRProject.Classes.Timer
             {
                 try
                 {
+                    string gate_group = "";
+                    string gate_number = "";
+
+                    if(!string.IsNullOrWhiteSpace(datarow.GateNumber))
+                    {
+                        Match result = GateReg.Match(datarow.GateNumber);
+
+                        gate_group = result.Groups[1].ToString();
+                        gate_number = result.Groups[2].ToString();
+                    }
 
                     DateTime currDateTime = DateTime.Now;
 
@@ -78,7 +90,7 @@ namespace SignalRProject.Classes.Timer
                         string fileLoc = Arrival.AnnounceArrival(datarow);
                         var bytesMP3 = File.ReadAllBytes(fileLoc);
                         _logger.LogInformation("Arrival flight: " + datarow.FlightNum + " at arrivaltime: " + arrTime.Hours + ":" + arrTime.Minutes);
-                        _hubcontext.Clients.Groups("Clients").SendAsync("Notify", bytesMP3);
+                        _hubcontext.Clients.All.SendAsync("Notify", bytesMP3);
                         continue;
                     }
 
@@ -88,7 +100,7 @@ namespace SignalRProject.Classes.Timer
                         string fileLoc = GateOpen.AnnounceGateOpen(datarow);
                         var bytesMP3 = File.ReadAllBytes(fileLoc);
                         _logger.LogInformation("Gate open flight: " + datarow.FlightNum + " at departure time: " + depTime.Hours + ":" + depTime.Minutes);
-                        _hubcontext.Clients.Groups("Clients").SendAsync("Notify", bytesMP3);
+                        _hubcontext.Clients.Groups("Clients_" + gate_group).SendAsync("Notify", bytesMP3);
                         continue;
                     }
 
@@ -98,7 +110,7 @@ namespace SignalRProject.Classes.Timer
                         string fileLoc = FinalCall.AnnounceFinalCall(datarow);
                         var bytesMP3 = File.ReadAllBytes(fileLoc);
                         _logger.LogInformation("Final call flight: " + datarow.FlightNum + " at departure time: " + depTime.Hours + ":" + depTime.Minutes);
-                        _hubcontext.Clients.Groups("Clients").SendAsync("Notify", bytesMP3);
+                        _hubcontext.Clients.Groups("Clients_" + gate_group).SendAsync("Notify", bytesMP3);
                         continue;
                     }
 

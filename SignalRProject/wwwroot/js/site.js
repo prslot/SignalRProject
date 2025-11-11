@@ -2,24 +2,28 @@
 
 var SignalRConn = new signalR.HubConnectionBuilder().withUrl("/hub").build();
 
-SignalRConn.on("SendRegisterHub", function (id, app_name) {
+SignalRConn.on("SendRegisterHub", function (id, app_name, gate_group, gate_number) {
 
-    if (document.querySelector('[data-appname="' + app_name + '"]')) {
-        var existingElement = document.querySelector('[data-appname="' + app_name + '"]');
+    var data_name = app_name + "_" + gate_group + "_" + gate_number;
+
+    if (document.querySelector('[data-appname="' + data_name + '"]')) {
+        var existingElement = document.querySelector('[data-appname="' + data_name + '"]');
         existingElement.id = id;
         updateTableElement(id, app_name, " --> last seen at: ")
     }
     else {
-        createTableElement(id, app_name, " --> registered at: ")
+        createTableElement(id, app_name, " --> registered at: ", gate_group, data_name)
     }
 });
 
-SignalRConn.on("SendPollHub", function (id, app_name) {
+SignalRConn.on("SendPollHub", function (id, app_name, gate_group, gate_number) {
+
+    var data_name = app_name + "_" + gate_group + "_" + gate_number;
 
     if (document.getElementById(id)) {
         updateTableElement(id, app_name, " --> last seen at: ")
     } else {
-        createTableElement(id, app_name, " --> registered at: ")
+        createTableElement(id, app_name, " --> registered at: ", gate_group, data_name)
     }
 
 });
@@ -45,11 +49,11 @@ SignalRConn.start().then(function () {
 });
 
 
-function createTableElement(id, application, action) {
-    var table = document.getElementById('tblConnectedApps');
+function createTableElement(id, application, action, gate_groupp, data_name) {
+    var table = document.getElementById('tblConnectedApps_' + gate_groupp);
     var tr = document.createElement('tr');
     tr.id = id;
-    tr.dataset.appname = application;
+    tr.dataset.appname = data_name;
     table.appendChild(tr);
 
     var td = document.createElement('td');

@@ -6,6 +6,9 @@ using NetCoreAudio.Players;
 
 Console.WriteLine("Provide a device name.");
 var app_identifier = Console.ReadLine();
+Console.WriteLine("Provide gate number.");
+var gate_number = Console.ReadLine();
+
 //Guid uniqueAppCode = Guid.NewGuid();
 
 var SignalRConn = new HubConnectionBuilder()
@@ -25,12 +28,12 @@ SignalRConn.On<byte[]>("Notify", async message =>
 });
 
 await SignalRConn.StartAsync();
-await SignalRConn.InvokeAsync("AddToClientGroup");
-await SignalRConn.InvokeAsync("RegisterHub", app_identifier);
+await SignalRConn.InvokeAsync("AddToClientGroup", gate_number);
+await SignalRConn.InvokeAsync("RegisterHub", app_identifier, gate_number);
 
 while (true)
 {
-    await SignalRConn.InvokeAsync("PollHub", app_identifier);
+    await SignalRConn.InvokeAsync("PollHub", app_identifier, gate_number);
     await Task.Delay(30000);
 }
 
